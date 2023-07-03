@@ -1,4 +1,6 @@
 const User = require('../database/models/Users');
+const session = require('../middlewares/Session');
+
 
 module.exports = {
    async InsertUser(req,res) {
@@ -9,8 +11,8 @@ module.exports = {
 
     async FindUser(req, res) {
       const query = await User.findAll({
-         attributes:['id','name','pass'],
-         where:{email: req.body.email }
+         attributes:['email','pass'],
+         where:{email: req.body.email,pass:req.body.pass }
       });
      if(query.length === 0) {
         return res.status(400).json({
@@ -18,7 +20,14 @@ module.exports = {
             mensage: "USER NOT FOUND"
         });
      } 
-      return res.json(query)
-         
-      }
+      const { email, pass } = query[0].dataValues;
+      
+      req.session.email= email
+      req.session.pass = pass
+    
+      return res.json({ success: true });
+
+    },
     };
+
+   
