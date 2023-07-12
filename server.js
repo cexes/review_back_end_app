@@ -1,13 +1,14 @@
+require('./src/database')
 const express = require('express');
 const app = express()
-const port = 3030
+const routes = require('./src/routes/routes')
+const session = require('./src/middlewares/Session')
+
+app.use(express.json())
+app.use(routes);
 
 
-app.get("/teste",()=>{
-  console.log("Teste")
-})
-
-app.listen(port, ()=> {
-  console.log("Rodando")
+app.listen(3030, ()=> {
+  console.log("Rodando na porta 3030")
 })
 
