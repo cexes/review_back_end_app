@@ -1,13 +1,27 @@
-const  UsersController = require('../controllers/UsersControllers');
+const  LoginController = require('../controllers/LoginController');
 const ReviewUserController = require('../controllers/ReviewUserController');
+const sessionMiddleware = require('../middlewares/Session');
+
 // <--- Router Config --->
+
 const express = require('express');
 const routes = express.Router()
 
-routes.post('/register_user',UsersController.InsertUser);
-routes.post('/new_review', ReviewUserController.InserNewReview);
+// Routes Posts
+routes.post('/login',sessionMiddleware,LoginController.FindUser)
 
-routes.get('/',(req,res)=>{
-    console.log("Cheguei aqui")
-})
+// Routes Get
+
+routes.get('/debug', sessionMiddleware,(req,res) => {
+    console.log(req.session.email,req.session.pass)
+    res.json({'SESSION':true})
+});
+
+routes.get('/logout', sessionMiddleware,(req,res)=>{ 
+    req.session.destroy();
+    res.json({'SESSION':false})
+});
+
+routes.get('/showReviews', ReviewUserController.ReturnViews)
+
 module.exports = routes;
