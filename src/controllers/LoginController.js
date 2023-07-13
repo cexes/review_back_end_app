@@ -10,6 +10,7 @@ module.exports = {
       const user = await User.create({name,email,pass,date,date});
       req.session.email = email;
       req.session.pass = pass;
+      req.session.ident = user.id
       return res.json(user);
       }catch(err){ return res.json(err) };
   },

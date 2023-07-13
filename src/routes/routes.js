@@ -19,7 +19,8 @@ routes.get('/debug', sessionMiddleware,(req,res) => {
      if(req.session.email && req.session.pass) {
         return res.json({
             'EMAIL': req.session.email,
-            'PASS': req.session.pass
+            'PASS': req.session.pass,
+             'ID': req.session.ident
         })
      }else {
         return res.json({'SESSION':false})
@@ -31,6 +32,6 @@ routes.get('/logout', sessionMiddleware,(req,res)=>{
     res.json({'SESSION':false})
 });
 
-routes.get('/showReviews', ReviewUserController.ReturnViews)
+routes.post('/createReview',sessionMiddleware, ReviewUserController.InserNewReview)
 
 module.exports = routes;
