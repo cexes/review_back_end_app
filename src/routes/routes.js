@@ -10,11 +10,11 @@ const routes = express.Router()
 // Routes Posts
 
 routes.post('/registerNewUser', sessionMiddleware, LoginController.InsertUser);
-
+routes.post('/createReview',sessionMiddleware,ReviewUserController.InserNewReview);
 routes.post('/login',sessionMiddleware,LoginController.FindUser)
 
 // Routes Get
-
+routes.get('/reviews', sessionMiddleware,ReviewUserController.ReturnReviews)
 routes.get('/debug', sessionMiddleware,(req,res) => {
      if(req.session.email && req.session.pass) {
         return res.json({
@@ -32,6 +32,5 @@ routes.get('/logout', sessionMiddleware,(req,res)=>{
     res.json({'SESSION':false})
 });
 
-routes.post('/createReview',sessionMiddleware, ReviewUserController.InserNewReview)
 
 module.exports = routes;

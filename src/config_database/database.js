@@ -1,8 +1,8 @@
 module.exports  = {
   dialect: 'postgres',
   host: 'localhost',
-  username:'root',
-  password: 'adm',
+  username:'adm',
+  password: 'root',
   database: 'reviewLogicHomolog',
   define: {
     timestamps: true,
