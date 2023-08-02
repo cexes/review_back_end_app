@@ -6,28 +6,24 @@ const sessionMiddleware = require('../middlewares/Session');
 
 const express = require('express');
 const routes = express.Router()
-
+routes.use(sessionMiddleware)
 // Routes Posts
 
-routes.post('/registerNewUser', sessionMiddleware, LoginController.InsertUser);
-routes.post('/createReview',sessionMiddleware,ReviewUserController.InserNewReview);
-routes.post('/login',sessionMiddleware,LoginController.FindUser)
+routes.post('/registerNewUser', LoginController.InsertUser);
+routes.post('/createReview',ReviewUserController.InserNewReview);
+routes.post('/login',LoginController.FindUser)
 
 // Routes Get
-routes.get('/reviews', sessionMiddleware,ReviewUserController.ReturnReviews)
-routes.get('/debug', sessionMiddleware,(req,res) => {
-     if(req.session.email && req.session.pass) {
+routes.get('/reviews',ReviewUserController.ReturnReviews)
+routes.get('/debug',(req,res) => {
         return res.json({
             'EMAIL': req.session.email,
             'PASS': req.session.pass,
              'ID': req.session.ident
-        })
-     }else {
-        return res.json({'SESSION':false})
-     }
-});
 
-routes.get('/logout', sessionMiddleware,(req,res)=>{ 
+})});
+
+routes.get('/logout',(req,res)=>{ 
     req.session.destroy();
     res.json({'SESSION':false})
 });
