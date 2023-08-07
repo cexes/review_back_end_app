@@ -17,7 +17,7 @@ module.exports = {
 
     async FindUser(req, res) {
       const query = await User.findAll({
-         attributes:['id','email','pass'],
+         attributes:['id','email','name','pass'],
          where:{email: req.body.email,pass:req.body.pass }
       });
      if(query.length === 0) {
@@ -26,12 +26,12 @@ module.exports = {
             mensage: "USER NOT FOUND"
         });
      } 
-      const { id, email, pass } = query[0].dataValues;
+      const { id, email,name, pass } = query[0].dataValues;
       
       req.session.ident = id;
       req.session.email= email;
-      req.session.pass = pass;
-    
+      req.session.name = name;
+
       return res.json({ success: true });
 
     },

@@ -18,7 +18,7 @@ routes.get('/reviews',ReviewUserController.ReturnReviews)
 routes.get('/debug',(req,res) => {
         return res.json({
             'EMAIL': req.session.email,
-            'PASS': req.session.pass,
+            'NAME': req.session.name,
              'ID': req.session.ident
 
 })});
