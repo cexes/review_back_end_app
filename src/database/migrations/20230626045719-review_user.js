@@ -25,7 +25,11 @@ module.exports = {
        note: {
          type: Sequelize.INTEGER,
          allowNull:false
-       },   
+       },
+       name_review: {
+           type:Sequelize.STRING,
+           allowNull:false
+       },
        category: {
          type: Sequelize.STRING,
          allowNull: false
